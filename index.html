@@ -214,6 +214,14 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         console.error('Upload failed:', error);
     }
 });
+        document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('#uploadForm');
+    if (form) {
+        form.addEventListener('submit', handleUpload);
+    } else {
+        console.error('Could not find upload form!');
+    }
+});
     </script>
 </body>
 </html>
