@@ -305,7 +305,6 @@ async function uploadFile() {
     audioPlayer.controls = true;
     audioPlayer.innerHTML = `
       <source src="${data.audio_url}" type="audio/mpeg">
-    `;
     document.getElementById('resultContainer').appendChild(audioPlayer);
     
   } catch (error) {
