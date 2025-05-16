@@ -144,14 +144,14 @@
         </div>
         {% endif %}
 
-        {% if actual_time %}
+        {% if processing_time %}
         <div class="notification info">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px;">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="16" x2="12" y2="12"></line>
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
-            Conversion completed in {{ actual_time }} seconds
+            Conversion completed in {{ processing_time }} seconds
         </div>
         {% endif %}
 
@@ -164,7 +164,7 @@
             Your audio is ready!
         </div>
         <audio controls autoplay>
-            <source src=" https://a0b3-202-47-44-217.ngrok-free.app/static/output.mp3" type="audio/mpeg" />
+            <source src=" {{ audio_url }}" type="audio/mpeg" />
             Your browser does not support the audio element.
         </audio>
         {% endif %}
