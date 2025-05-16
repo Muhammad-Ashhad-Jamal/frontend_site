@@ -294,6 +294,7 @@ async function uploadFile() {
     headers: {
       'Accept': 'application/json'
     }
+      mode: 'cors'
   });
 
   if (!response.ok) {
