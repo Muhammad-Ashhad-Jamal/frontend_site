@@ -287,30 +287,45 @@ async function uploadFile() {
   const formData = new FormData();
   formData.append('file', fileInput.files[0]);
 
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
+ try {
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  });
 
-    if (!response.ok) throw new Error('Server error');
-    
-    const data = await response.json();
-    
-    // Update audio player
-    const audioPlayer = document.createElement('audio');
-    audioPlayer.controls = true;
-    audioPlayer.innerHTML = `
-      <source src="${data.audio_url}" type="audio/mpeg">
-    document.getElementById('resultContainer').appendChild(audioPlayer);
-    
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Failed to process file. Please try again.');
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || 'Server error');
   }
+  
+  const data = await response.json();
+  const resultContainer = document.getElementById('resultContainer');
+  
+  // Clear previous results
+  resultContainer.innerHTML = '';
+  
+  // Create audio element programmatically (more reliable than innerHTML)
+  const audioPlayer = document.createElement('audio');
+  audioPlayer.controls = true;
+  audioPlayer.autoplay = true;
+  
+  const source = document.createElement('source');
+  source.src = data.audio_url;
+  source.type = 'audio/mpeg';
+  audioPlayer.appendChild(source);
+  
+  resultContainer.appendChild(audioPlayer);
+    
+} catch (error) {
+  console.error('Error:', error);
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'error';
+  errorDiv.textContent = `Error: ${error.message}`;
+  document.getElementById('resultContainer').appendChild(errorDiv);
+}
 
     </script>
 </body>
