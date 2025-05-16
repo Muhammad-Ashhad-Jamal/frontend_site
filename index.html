@@ -280,19 +280,39 @@
             }
         });
         // In your frontend JavaScript (index.html)
-        const API_URL = 'https://a0b3-202-47-44-217.ngrok-free.app/upload'; // Replace with your actual URL
-        
-        async function handleUpload() {
-          try {
-            const response = await fetch(API_URL, {
-              method: 'POST',
-              body: formData
-            });
-            // ... rest of your code
-          } catch (error) {
-            console.error('Fetch error:', error);
-            showError('Connection failed. Please try again later.');
-          }
+        // Update your fetch call to:
+const API_URL = 'https://a0b3-202-47-44-217.ngrok-free.app/upload'; // Replace with actual URL
+
+async function uploadFile() {
+  const formData = new FormData();
+  formData.append('file', fileInput.files[0]);
+
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (!response.ok) throw new Error('Server error');
+    
+    const data = await response.json();
+    
+    // Update audio player
+    const audioPlayer = document.createElement('audio');
+    audioPlayer.controls = true;
+    audioPlayer.innerHTML = `
+      <source src="${data.audio_url}" type="audio/mpeg">
+    `;
+    document.getElementById('resultContainer').appendChild(audioPlayer);
+    
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to process file. Please try again.');
+  }
+}
 }
     </script>
 </body>
