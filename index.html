@@ -190,7 +190,7 @@
         <div id="resultContainer"></div>
     </div>
 
-    <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         const fileInput = document.getElementById('fileInput');
         const uploadForm = document.getElementById('uploadForm');
@@ -200,7 +200,7 @@
         const fileInfo = document.getElementById('fileInfo');
         const fileName = document.getElementById('fileName');
 
-        // Use a single consistent API URL
+        // Use the current ngrok URL from your screenshot
         const API_BASE_URL = 'https://87d5-202-47-45-138.ngrok-free.app';
 
         // Show selected filename
@@ -287,6 +287,7 @@
                     }
                 } catch (error) {
                     showError(error.message);
+                    console.error('Error:', error); // Added for better debugging
                 } finally {
                     convertBtn.disabled = false;
                     convertBtn.innerHTML = '<i class="fas fa-microphone-alt" style="margin-right: 8px;"></i> Convert to Speech';
